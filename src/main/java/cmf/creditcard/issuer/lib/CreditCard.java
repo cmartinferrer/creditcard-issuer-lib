@@ -13,7 +13,7 @@ public class CreditCard {
 
   public String getType() {
     return Issuers
-        .getIssuers()
+        .getIssuerList()
         .stream()
         .filter(cardIssuer -> cardNumber.matches(cardIssuer.getRegex()))
         .findFirst()

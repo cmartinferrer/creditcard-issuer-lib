@@ -9,18 +9,22 @@ import java.util.List;
 class Issuers {
 
   private static final String ISSUERS_JSON = "src/main/resources/card-issuers.json";
-  private static List<IssuerDto> issuers;
+  private static List<IssuerDto> issuerList;
 
   static {
     ObjectMapper mapper = new ObjectMapper();
     try {
-      issuers = Arrays.asList(mapper.readValue(new File(ISSUERS_JSON), IssuerDto[].class));
-    } catch (IOException e) {
-      e.printStackTrace();
+      issuerList = Arrays.asList(mapper.readValue(new File(ISSUERS_JSON), IssuerDto[].class));
+    } catch (IOException ioException) {
+      ioException.printStackTrace();
     }
   }
 
-  public static List<IssuerDto> getIssuers() {
-    return issuers;
+  private Issuers() {
+    throw new IllegalStateException("This class cannot be instantiated");
+  }
+
+  public static List<IssuerDto> getIssuerList() {
+    return issuerList;
   }
 }
