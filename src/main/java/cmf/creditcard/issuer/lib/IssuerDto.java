@@ -8,11 +8,6 @@ class IssuerDto {
   public IssuerDto() {
   }
 
-  public IssuerDto(String name, String regex) {
-    this.name = name;
-    this.regex = regex;
-  }
-
   public String getName() {
     return name;
   }
