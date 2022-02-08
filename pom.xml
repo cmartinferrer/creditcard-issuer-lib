@@ -30,6 +30,10 @@
     <!-- Dependencies -->
     <jackson-databind.version>2.13.1</jackson-databind.version>
     <junit-platform.version>5.3.1</junit-platform.version>
+
+    <pitest.version>1.6.7</pitest.version>
+    <pitest-junit5-plugin.version>0.14</pitest-junit5-plugin.version>
+
   </properties>
 
   <dependencies>
@@ -37,6 +41,13 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>${jackson-databind.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.pitest</groupId>
+      <artifactId>pitest-parent</artifactId>
+      <version>${pitest.version}</version>
+      <type>pom</type>
     </dependency>
 
     <dependency>
@@ -100,7 +111,38 @@
           </execution>
         </executions>
       </plugin>
-
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>${pitest.version}</version>
+        <!--attach execution to maven's test phase-->
+        <executions>
+          <execution>
+            <id>pit-report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>mutationCoverage</goal>
+            </goals>
+          </execution>
+        </executions>
+        <!--allows to work with JUnit 5-->
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>${pitest-junit5-plugin.version}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <targetClasses>
+            <param>cmf.creditcard.issuer.lib.CreditCard</param>
+            <param>cmf.creditcard.issuer.lib.Issuers</param>
+          </targetClasses>
+          <targetTests>
+            <param>cmf.creditcard.issuer.lib.*</param>
+          </targetTests>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
